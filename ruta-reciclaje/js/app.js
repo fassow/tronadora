@@ -156,6 +156,37 @@ async function registrarCambio(sectorId, sectorNombre, estadoAnterior, nuevoEsta
   }
 }
 
+async function enviarNotificacion(tipo, mensaje, sectorId = null) {
+  try {
+    const user = auth.currentUser;
+    const notificacionData = {
+      tipo,
+      mensaje,
+      sectorId,
+      conductorEmail: user ? user.email : null,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      leido: false
+    };
+    
+    const docRef = await db.collection('notificaciones').add(notificacionData);
+    console.log("Notificación enviada con ID:", docRef.id);
+    
+    return true;
+  } catch (error) {
+    console.error("Error enviando notificación:", error);
+    mostrarNotificacion('Error al enviar notificación', 'error');
+    return false;
+  }
+}
+
+// Función para obtener notificaciones
+function obtenerNotificaciones(callback) {
+  return db.collection('notificaciones')
+    .orderBy('timestamp', 'desc')
+    .limit(10)
+    .onSnapshot(callback);
+}
+
 // Función para actualizar estado de sector (MODIFICADA)
 async function actualizarEstadoSector(sectorId, estado) {
   if (!sectorId) {
@@ -227,5 +258,7 @@ window.firebaseFunctions = {
   obtenerClaseBadgePorEstado,
   actualizarEstadoSector,
   getEstiloSector,
-  registrarCambio
+  registrarCambio,
+  enviarNotificacion,
+  obtenerNotificaciones
 };
