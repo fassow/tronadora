@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const controlesEdicion = document.getElementById('controles-edicion');
   const togglePassword = document.getElementById('togglePassword');
   const passwordInput = document.getElementById('password');
+  const btnAbrirNotificacion = document.getElementById('btnAbrirNotificacion');
 
   // Variables de estado
   let mapaConductor = null;
@@ -48,6 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (user) {
       loginForm.classList.add('d-none');
       conductorUI.classList.remove('d-none');
+      
+      // Mostrar botón de notificaciones solo cuando el conductor está autenticado
+      if (btnAbrirNotificacion) {
+        btnAbrirNotificacion.style.display = 'block';
+      }
+      
       await iniciarMapaConductor();
       escucharCambiosEnTiempoReal();
       actualizarResumen();
@@ -57,6 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       loginForm.classList.remove('d-none');
       conductorUI.classList.add('d-none');
+      
+      // Ocultar botón de notificaciones cuando no hay usuario autenticado
+      if (btnAbrirNotificacion) {
+        btnAbrirNotificacion.style.display = 'none';
+      }
+      
       if (mapaConductor) {
         mapaConductor.remove();
         mapaConductor = null;
@@ -306,12 +319,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Event listeners para notificaciones
-  document.getElementById('btnAbrirNotificacion').addEventListener('click', abrirModalNotificacion);
-  document.getElementById('btnEnviarNotificacion').addEventListener('click', enviarNotificacion);
+  // Event listeners para notificaciones (solo si el botón existe)
+  if (btnAbrirNotificacion) {
+    btnAbrirNotificacion.addEventListener('click', abrirModalNotificacion);
+  }
+  
+  if (document.getElementById('btnEnviarNotificacion')) {
+    document.getElementById('btnEnviarNotificacion').addEventListener('click', enviarNotificacion);
+  }
 
   // Función para abrir modal de notificación
   function abrirModalNotificacion() {
+    // Verificar que el usuario esté autenticado
+    const user = auth.currentUser;
+    if (!user) {
+      mostrarNotificacion('Debes estar autenticado para enviar notificaciones', 'error');
+      return;
+    }
+    
     // Cargar sectores en el select
     cargarSectoresParaNotificacion();
     
