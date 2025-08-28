@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let mapaConductor = null;
   let sectorSeleccionado = null;
   let capaSectores = null;
+  let sectoresDisponibles = [];
   const layers = {};
 
   // Toggle para mostrar/ocultar contraseña
@@ -304,6 +305,74 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarNotificacion('Por favor selecciona un sector primero', 'error');
     }
   });
+
+  // Event listeners para notificaciones
+  document.getElementById('btnAbrirNotificacion').addEventListener('click', abrirModalNotificacion);
+  document.getElementById('btnEnviarNotificacion').addEventListener('click', enviarNotificacion);
+
+  // Función para abrir modal de notificación
+  function abrirModalNotificacion() {
+    // Cargar sectores en el select
+    cargarSectoresParaNotificacion();
+    
+    const modal = new bootstrap.Modal(document.getElementById('modalNotificacion'));
+    modal.show();
+  }
+
+  // Función para cargar sectores
+  async function cargarSectoresParaNotificacion() {
+    try {
+      const snapshot = await db.collection('sectores').get();
+      const select = document.getElementById('sectorAfectado');
+      
+      // Limpiar opciones excepto la primera
+      while (select.options.length > 1) {
+        select.remove(1);
+      }
+      
+      snapshot.forEach(doc => {
+        const option = document.createElement('option');
+        option.value = doc.id;
+        option.textContent = doc.data().nombre;
+        select.appendChild(option);
+      });
+      
+      sectoresDisponibles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+    } catch (error) {
+      console.error("Error cargando sectores:", error);
+    }
+  }
+
+  // Función para enviar notificación
+  async function enviarNotificacion() {
+    const tipo = document.getElementById('tipoIncidencia').value;
+    const sectorId = document.getElementById('sectorAfectado').value;
+    const mensaje = document.getElementById('mensajeIncidencia').value;
+    
+    if (!tipo || !mensaje) {
+      mostrarNotificacion('Por favor complete todos los campos obligatorios', 'error');
+      return;
+    }
+    
+    try {
+      const sectorNombre = sectorId ? sectoresDisponibles.find(s => s.id === sectorId)?.nombre : 'Todos los sectores';
+      
+      const mensajeCompleto = `[${tipo.toUpperCase()}] ${mensaje} ${sectorId ? `(Sector: ${sectorNombre})` : ''}`;
+      
+      const exito = await window.firebaseFunctions.enviarNotificacion(tipo, mensajeCompleto, sectorId);
+      
+      if (exito) {
+        mostrarNotificacion('Reporte enviado correctamente', 'success');
+        document.getElementById('formNotificacion').reset();
+        bootstrap.Modal.getInstance(document.getElementById('modalNotificacion')).hide();
+      }
+      
+    } catch (error) {
+      console.error("Error enviando notificación:", error);
+      mostrarNotificacion('Error al enviar el reporte', 'error');
+    }
+  }
 });
 
 // Función auxiliar para obtener clase de badge según estado
