@@ -453,3 +453,12 @@
 .animate-fade {
   animation: fadeIn 0.6s ease-out forwards;
 }
+
+#btnAbrirNotificacion {
+  display: none;
+}
+
+
+#conductor-interface #btnAbrirNotificacion {
+  display: block;
+}
