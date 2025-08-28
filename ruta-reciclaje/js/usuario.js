@@ -118,6 +118,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  // Función para cargar notificaciones
+  function cargarNotificaciones() {
+    return window.firebaseFunctions.obtenerNotificaciones((snapshot) => {
+      const lista = document.getElementById('lista-notificaciones');
+      const contador = document.getElementById('lastUpdateNotificaciones');
+      
+      if (snapshot.empty) {
+        lista.innerHTML = `
+          <div class="list-group-item text-center py-5">
+            <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No hay notificaciones recientes</p>
+          </div>
+        `;
+        return;
+      }
+      
+      lista.innerHTML = '';
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const fecha = data.timestamp?.toDate() || new Date();
+        
+        const item = document.createElement('div');
+        item.className = 'list-group-item notification-item';
+        item.innerHTML = `
+          <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1 text-warning">
+              <i class="fas fa-exclamation-circle me-2"></i>${data.tipo?.toUpperCase()}
+            </h6>
+            <small class="text-muted">${fecha.toLocaleString()}</small>
+          </div>
+          <p class="mb-1">${data.mensaje}</p>
+          <small class="text-muted">Reportado por: ${data.conductorEmail || 'Sistema'}</small>
+        `;
+        lista.appendChild(item);
+      });
+      
+      contador.textContent = new Date().toLocaleTimeString();
+    });
+  }
+
+  // Cargar notificaciones
+  cargarNotificaciones();
+
   // Función auxiliar para obtener clase de badge según estado
   function obtenerClaseBadgePorEstado(estado) {
     switch(estado) {
