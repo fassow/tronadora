@@ -1,0 +1,422 @@
+:root {
+  /* Colores Base */
+  --white: #ffffff;
+  --black: #000000;
+  
+  /* Colores Eco */
+  --eco-50: #f0fdf4;
+  --eco-100: #dcfce7;
+  --eco-200: #bbf7d0;
+  --eco-300: #86efac;
+  --eco-400: #4ade80;
+  --eco-500: #22c55e;
+  --eco-600: #16a34a;
+  --eco-700: #15803d;
+  --eco-800: #166534;
+  --eco-900: #14532d;
+  --eco-950: #052e16;
+  
+  /* Colores Estado */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  
+  /* Escala de Grises */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Gradientes */
+  --gradient-eco: linear-gradient(135deg, var(--eco-400), var(--eco-600));
+  --gradient-eco-dark: linear-gradient(135deg, var(--eco-600), var(--eco-800));
+  --gradient-success: linear-gradient(135deg, var(--success), #16a34a);
+  --gradient-warning: linear-gradient(135deg, var(--warning), #d97706);
+  --gradient-danger: linear-gradient(135deg, var(--danger), #b91c1c);
+  --gradient-info: linear-gradient(135deg, var(--info), #1d4ed8);
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-eco: 0 0 15px rgba(34, 197, 94, 0.3);
+  
+  /* Bordes */
+  --radius-sm: 0.125rem;
+  --radius: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  /* Tipografía */
+  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Roboto Mono', Menlo, monospace;
+  --font-serif: Georgia, serif;
+  
+  /* Transiciones */
+  --transition: all 0.2s ease-in-out;
+  --transition-slow: all 0.4s ease-in-out;
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* Reset y Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-800);
+  background-color: var(--gray-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+  color: var(--gray-700);
+}
+
+a {
+  color: var(--eco-600);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--eco-700);
+  text-decoration: underline;
+}
+
+/* Utilidades */
+.text-eco { color: var(--eco-500); }
+.bg-eco { background-color: var(--eco-500); }
+.bg-eco-gradient { background: var(--gradient-eco); }
+.btn-eco { background: var(--gradient-eco); color: white; }
+.shadow-eco { box-shadow: var(--shadow-eco); }
+
+/* Componentes */
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 1rem 0;
+  background: var(--gradient-eco-dark);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(8px);
+  transition: var(--transition-slow);
+}
+
+.navbar.scrolled {
+  padding: 0.5rem 0;
+  box-shadow: var(--shadow-xl);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-brand span:first-of-type {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: var(--radius-xl);
+  background: white;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: var(--transition-bounce);
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  padding: 1rem 1.5rem;
+  background: var(--gradient-eco);
+  color: white;
+  font-weight: 600;
+}
+
+/* Mapa */
+.mapa-interactivo {
+  height: 600px;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  background: var(--gray-100);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.btn:hover {
+  transform: translateY(-0.125rem);
+}
+
+.btn-eco:hover {
+  box-shadow: var(--shadow-eco);
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Listas */
+.list-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list-group-item {
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-group-item:hover {
+  transform: translateX(0.25rem);
+  box-shadow: var(--shadow);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+/* Interfaz Usuario */
+.interfaz-usuario {
+  background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), 
+              url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30,10 L50,30 L70,10" fill="none" stroke="%2322c55e" stroke-width="0.5" opacity="0.05"/></svg>');
+  background-size: 200px;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23ffffff" stroke-width="1" opacity="0.05"/></svg>');
+  background-size: 100px;
+  opacity: 0.1;
+}
+
+/* Avatar */
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background-color: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablas */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background-color: var(--gray-50);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--gray-50);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  html {
+    font-size: 15px;
+  }
+  
+  .mapa-interactivo {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .mapa-interactivo {
+    height: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .mapa-interactivo {
+    height: 350px;
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* Añade estos estilos al final del archivo styles.css */
+
+/* Ajustes para el mapa */
+.mapa-interactivo {
+  height: 100%;
+  width: 100%;
+  min-height: 300px;
+}
+
+/* Ajustes para las tarjetas de información */
+.card {
+  transition: var(--transition);
+}
+
+.card-body {
+  overflow: hidden;
+}
+
+/* Ajustes para la lista de sectores */
+#lista-sectores {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 992px) {
+  .mapa-interactivo {
+    height: 400px;
+  }
+  
+  #lista-sectores {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mapa-interactivo {
+    height: 350px;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .mapa-interactivo {
+    height: 300px;
+  }
+  
+  #lista-sectores {
+    max-height: 120px;
+  }
+}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoRuta Tilarán - Sistema de Reciclaje Inteligente</title>
+  <meta name="description" content="Sistema de seguimiento de rutas de reciclaje en Tilarán, Costa Rica">
+  
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" as="style">
+  <link rel="preload" href="css/styles.css" as="style">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animaciones.css">
+</head>
+<body class="interfaz-usuario">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-eco" style="position: sticky; top: 0; z-index: 1000;">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-recycle me-2"></i>
+        <span>EcoRuta</span>
+        <span class="badge bg-light text-eco ms-2">Tilarán</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#mapa"><i class="fas fa-map-marked-alt me-1"></i> Mapa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#estado"><i class="fas fa-info-circle me-1"></i> Estado</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#horarios"><i class="far fa-clock me-1"></i> Horarios</a>
+          </li>
+          <li class="nav-item">
+            <a href="supervisor.html" class="nav-link">
+              <i class="fas fa-user-shield me-1"></i> Supervisor
+            </a>
+          </li>
+        </ul>
+        <a href="conductor.html" class="btn btn-light ms-lg-3">
+          <i class="fas fa-truck me-1"></i> Acceso Conductor
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid px-0">
+    <section class="hero-section text-white py-5" style="background: url('img/ecoruta.jpg') no-repeat center center; background-size: cover; position: relative;">
+      <div class="container text-center py-4" style="position: relative; z-index: 2;">
+        <h1 class="display-4 fw-bold mb-3 animate-slide-top">
+          <i class="fas fa-recycle me-2"></i> Sistema de Reciclaje Inteligente
+        </h1>
+        <p class="lead mb-4 animate-slide-top delay-1">
+          Monitorea en tiempo real las rutas de recolección en Tilarán
+        </p>
+        <div class="d-flex justify-content-center gap-3 animate-slide-top delay-2">
+          <a href="#mapa" class="btn btn-light btn-lg">
+            <i class="fas fa-map me-1"></i> Ver Mapa
+          </a>
+          <a href="#estado" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-info-circle me-1"></i> Estado Actual
+          </a>
+        </div>
+      </div>
+      <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
+    </section>
+
+    <section id="mapa" class="py-4">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card shadow-eco border-0" style="height: 500px;">
+              <div class="card-header bg-eco text-white">
+                <h2 class="h5 mb-0">
+                  <i class="fas fa-map-marked-alt me-2"></i> Mapa de Recolección
+                </h2>
+              </div>
+              <div class="card-body p-0">
+                <div id="mapa-usuario" class="mapa-interactivo h-100"></div>
+              </div>
+              <div class="card-footer bg-light">
+                <small class="text-muted">
+                  <i class="fas fa-sync-alt me-1"></i> Actualizado: <span id="lastUpdate">hace unos segundos</span>
+                </small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <div id="estado" class="card shadow-eco border-0 mb-4" style="height: 240px;">
+              <div class="card-header bg-info text-white">
+                <h2 class="h5 mb-0">
+                  <i class="fas fa-chart-pie me-2"></i> Estado de los Sectores
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                  <div class="text-center">
+                    <div class="display-5 fw-bold text-danger" id="contador-pendientes">0</div>
+                    <small class="text-muted">Pendientes</small>
+                  </div>
+                  <div class="text-center">
+                    <div class="display-5 fw-bold text-warning" id="contador-camino">0</div>
+                    <small class="text-muted">En Camino</small>
+                  </div>
+                  <div class="text-center">
+                    <div class="display-5 fw-bold text-success" id="contador-recolectados">0</div>
+                    <small class="text-muted">Completados</small>
+                  </div>
+                </div>
+                
+                <div class="progress mb-3" style="height: 8px;">
+                  <div class="progress-bar bg-danger" id="progress-pendiente" style="width: 33%"></div>
+                  <div class="progress-bar bg-warning" id="progress-camino" style="width: 33%"></div>
+                  <div class="progress-bar bg-success" id="progress-completado" style="width: 34%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card shadow-sm border-0" style="height: 240px;">
+              <div class="card-body p-0">
+                <div class="list-group list-group-flush overflow-auto h-100" id="lista-sectores">
+                  <div class="list-group-item text-center py-4">
+                    <div class="spinner-border text-eco" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="mt-2 mb-0">Cargando información...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="horarios" class="py-4 bg-light">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+              <div class="card-header bg-primary text-white">
+                <h2 class="h5 mb-0">
+                  <i class="far fa-clock me-2"></i> Horarios de Recolección
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Día</th>
+                        <th>Horario</th>
+                        <th>Zonas</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Lunes - Viernes</td>
+                        <td>7:00 AM - 5:00 PM</td>
+                        <td>Todas las zonas</td>
+                      </tr>
+                      <tr>
+                        <td>Sábados</td>
+                        <td>8:00 AM - 12:00 PM</td>
+                        <td>Centro y zonas prioritarias</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="alert alert-info mt-3">
+                  <i class="fas fa-info-circle me-2"></i> Los horarios pueden variar en días festivos.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-12 mt-4">
+            <div class="card shadow-sm border-0">
+              <div class="card-header bg-success text-white">
+                <h2 class="h5 mb-0">
+                  <i class="fas fa-recycle me-2"></i> Materiales Aceptados
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6 col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success bg-opacity-10 p-2 rounded me-3">
+                        <i class="fas fa-wine-bottle text-success"></i>
+                      </div>
+                      <span>Envases plásticos</span>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success bg-opacity-10 p-2 rounded me-3">
+                        <i class="fas fa-cube text-success"></i>
+                      </div>
+                      <span>Cartón y papel</span>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success bg-opacity-10 p-2 rounded me-3">
+                        <i class="fas fa-beer text-success"></i>
+                      </div>
+                      <span>Vidrio</span>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success bg-opacity-10 p-2 rounded me-3">
+                        <i class="fas fa-cubes text-success"></i>
+                      </div>
+                      <span>Latas metálicas</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="alert alert-warning mt-3">
+                  <i class="fas fa-exclamation-triangle me-2"></i> No se aceptan residuos orgánicos ni peligrosos.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h3 class="h5 mb-3">
+            <i class="fas fa-recycle me-2 text-eco"></i> EcoRuta Tilarán
+          </h3>
+          <p>Sistema inteligente de gestión de rutas de reciclaje para el cantón de Tilarán, Guanacaste.</p>
+          <div class="social-icons">
+            <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h3 class="h5 mb-3">Contacto</h3>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="fas fa-phone-alt me-2 text-eco"></i> (506) 2695-5000</li>
+            <li class="mb-2"><i class="fas fa-envelope me-2 text-eco"></i> info@ecorutatilaran.com</li>
+            <li><i class="fas fa-map-marker-alt me-2 text-eco"></i> Tilarán, Guanacaste, Costa Rica</li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h3 class="h5 mb-3">Enlaces Rápidos</h3>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Políticas de Privacidad</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Términos de Servicio</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Preguntas Frecuentes</a></li>
+            <li><a href="conductor.html" class="text-eco text-decoration-none">Acceso para Conductores</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4 bg-secondary">
+      <div class="text-center">
+        <p class="mb-0 small">&copy; 2023 EcoRuta Tilarán. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/usuario.js"></script>
+</body>
+</html>

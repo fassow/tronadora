@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilarán - Cantón de Costa Rica</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-wind"></i>
+                </div>
+                <h1>Tilarán<span>Costa Rica</span></h1>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="/ruta-reciclaje/index.html"><i class="fas fa-recycle"></i> Eco Ruta</a></li>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#informacion">Información</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#atractivos">Atractivos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    
+    <div class="sidebar">
+        <div class="close-sidebar">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#informacion"><i class="fas fa-info-circle"></i> Información</a></li>
+            <li><a href="#servicios"><i class="fas fa-concierge-bell"></i> Servicios</a></li>
+            <li><a href="#atractivos"><i class="fas fa-mountain"></i> Atractivos</a></li>
+            <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+            <li><a href="#"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+            <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa Turístico</a></li>
+            <li><a href="#"><i class="fas fa-camera"></i> Galería</a></li>
+            <li><a href="/ruta-reciclaje/index.html"><i class="fas fa-recycle"></i> Eco Ruta</a></li>
+        </ul>
+    </div>
+    
+
+    <section id="inicio" class="hero">
+        <div class="container hero-content">
+            <h1>Descubre la Magia de Tilarán</h1>
+            <p>El corazón verde de Guanacaste donde la naturaleza y la cultura se encuentran</p>
+            <div class="hero-btns">
+                <a href="#informacion" class="btn">Explorar</a>
+                <a href="#contacto" class="btn btn-outline">Visítanos</a>
+            </div>
+            <a href="#informacion" class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+    
+
+    <section id="informacion" class="info">
+        <div class="container">
+            <div class="section-title">
+                <h2>Conoce Nuestro Cantón</h2>
+                <p>La tierra de los vientos y la belleza natural</p>
+            </div>
+            
+            <div class="info-content">
+                <div class="info-text">
+                    <h3>Tilarán: Joya de Guanacaste</h3>
+                    <p>Situado en la provincia de Guanacaste, Tilarán es un cantón que destaca por su impresionante belleza natural y su rica cultura. Con una altitud promedio de 550 metros sobre el nivel del mar, disfruta de un clima agradable durante todo el año.</p>
+                    <p>Fundado en 1923, Tilarán ha crecido manteniendo su esencia tradicional. Su economía se basa en la agricultura, el turismo y la producción de energía eólica, aprovechando los fuertes vientos que caracterizan la zona.</p>
+                    <p>El cantón es conocido como la "Ciudad de los Vientos" debido a los constantes vientos alisios que soplan desde el Lago de Arenal, creando condiciones ideales para la práctica de deportes como el windsurf y kiteboarding.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <span>19,640</span>
+                                <p>Habitantes</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-map"></i>
+                            <div>
+                                <span>638.39 km²</span>
+                                <p>Extensión</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-sun"></i>
+                            <div>
+                                <span>27°C</span>
+                                <p>Temperatura promedio</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-img">
+                    <div class="image-frame">
+                        <img src="img/joya-guanacaste.jpg" alt="Paisaje de Tilarán">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección Servicios -->
+    <section id="servicios" class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Servicios</h2>
+                <p>Todo lo que necesitas para disfrutar de Tilarán</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Guías Turísticas</h3>
+                    <p>Explora los rincones más bellos de Tilarán con nuestros guías expertos en ecoturismo y aventura.</p>
+                    <a href="#">Saber más <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3>Deportes de Viento</h3>
+                    <p>Vive la emoción del windsurf, kiteboarding y otros deportes acuáticos en el Lago Arenal.</p>
+                    <a href="#">Saber más <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Gastronomía Local</h3>
+                    <p>Descubre los sabores auténticos de Guanacaste con nuestros tours gastronómicos.</p>
+                    <a href="#">Saber más <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Hospedaje</h3>
+                    <p>Encuentra el alojamiento perfecto para tu estadía, desde eco-lodges hasta hoteles boutique.</p>
+                    <a href="#">Saber más <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección Atractivos -->
+    <section id="atractivos" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Atractivos Destacados</h2>
+                <p>Descubre los tesoros naturales de Tilarán</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="img/Lago-arenal.jpg" alt="Lago Arenal">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Lago Arenal</h3>
+                        <p>El lago más grande de Costa Rica, famoso por sus deportes acuáticos y vistas panorámicas al Volcán Arenal.</p>
+                        <a href="#" class="btn btn-outline">Ver más</a>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="img/Parques eolicos.jpg" alt="Parque Eólico">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Parques Eólicos</h3>
+                        <p>Descubre cómo Tilarán aprovecha sus fuertes vientos para producir energía renovable y sostenible.</p>
+                        <a href="#" class="btn btn-outline">Ver más</a>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="img/Cultura.jpg" alt="Cultura local">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Cultura Sabanera</h3>
+                        <p>Conoce las tradiciones, música y gastronomía de los sabaneros guanacastecos.</p>
+                        <a href="#" class="btn btn-outline">Ver más</a>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="img/aventuras.jpg" alt="Aventura">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Aventuras Extremas</h3>
+                        <p>Desde canopy hasta rappel, vive experiencias llenas de adrenalina en paisajes impresionantes.</p>
+                        <a href="#" class="btn btn-outline">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container contact-container">
+            <div class="contact-info">
+                <h3>Contáctanos</h3>
+                <p>¿Tienes preguntas sobre Tilarán o deseas planificar tu visita? Nuestro equipo está listo para ayudarte.</p>
+                
+                <div class="contact-details">
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Centro de Tilarán, Guanacaste, Costa Rica</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-phone"></i>
+                        <span>+506 2695-5050</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-envelope"></i>
+                        <span>info@tilaran-cr.com</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-clock"></i>
+                        <span>Lunes a Viernes: 8am - 5pm</span>
+                    </div>
+                </div>
+                
+                <div class="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.261135495138!2d-84.9675882237571!3d10.03222267397377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f9f5e3a1e2a5a1f%3A0x1c1d1d1d1d1d1d1d!2sTilar%C3%A1n%2C%20Guanacaste!5e0!3m2!1sen!2scr!4v1687856000000!5m2!1sen!2scr" width="100%" height="250" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nombre completo</label>
+                        <input type="text" id="name" class="form-control" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" class="form-control" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Tu teléfono">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" class="form-control" placeholder="Tu mensaje..." rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Enviar mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Tilarán<span>Costa Rica</span></div>
+                    <p>Promoviendo el turismo sostenible y la cultura del cantón de Tilarán. Descubre la magia de Guanacaste con nosotros.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#informacion">Sobre Tilarán</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#atractivos">Atractivos</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-newsletter">
+                    <h4>Boletín Informativo</h4>
+                    <p>Suscríbete para recibir noticias y promociones de Tilarán.</p>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Tu correo electrónico" required>
+                            <button type="submit" class="btn">Suscribirse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Cantón de Tilarán. Todos los derechos reservados. | Diseñado con ❤️ para Costa Rica</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript para funcionalidades
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menú lateral
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const closeSidebar = document.querySelector('.close-sidebar');
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Deshabilitar scroll
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Habilitar scroll
+            });
+            
+            // Cerrar sidebar al hacer clic fuera
+            document.addEventListener('click', function(event) {
+                if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Cambio de header al hacer scroll
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Scroll suave para enlaces
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Cerrar sidebar si está abierto
+                        sidebar.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Animación de elementos al hacer scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.service-card, .feature-card, .info-img, .info-text');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = 1;
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Configurar animaciones iniciales
+            document.querySelectorAll('.service-card, .feature-card, .info-img, .info-text').forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            // Ejecutar al cargar y al hacer scroll
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('load', animateOnScroll);
+        });
+    </script>
+</body>
+</html>
