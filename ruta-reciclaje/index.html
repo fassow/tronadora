@@ -46,6 +46,9 @@
             <a class="nav-link" href="#horarios"><i class="far fa-clock me-1"></i> Horarios</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#notificaciones"><i class="fas fa-exclamation-triangle me-1"></i> Notificaciones</a>
+          </li>
+          <li class="nav-item">
             <a href="supervisor.html" class="nav-link">
               <i class="fas fa-user-shield me-1"></i> Supervisor
             </a>
@@ -71,8 +74,8 @@
           <a href="#mapa" class="btn btn-light btn-lg">
             <i class="fas fa-map me-1"></i> Ver Mapa
           </a>
-          <a href="#estado" class="btn btn-outline-light btn-lg">
-            <i class="fas fa-info-circle me-1"></i> Estado Actual
+          <a href="#notificaciones" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-exclamation-triangle me-1"></i> Ver Notificaciones
           </a>
         </div>
       </div>
@@ -141,6 +144,35 @@
                     <p class="mt-2 mb-0">Cargando información...</p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="notificaciones" class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-sm border-0">
+              <div class="card-header bg-warning text-white">
+                <h2 class="h5 mb-0">
+                  <i class="fas fa-exclamation-triangle me-2"></i> Últimas Notificaciones
+                </h2>
+              </div>
+              <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="lista-notificaciones">
+                  <div class="list-group-item text-center py-5">
+                    <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No hay notificaciones recientes</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-light">
+                <small class="text-muted">
+                  <i class="fas fa-info-circle me-1"></i> Actualizado: <span id="lastUpdateNotificaciones">hace unos segundos</span>
+                </small>
               </div>
             </div>
           </div>
