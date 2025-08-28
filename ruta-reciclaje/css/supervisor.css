@@ -334,3 +334,45 @@
   margin-bottom: 1rem;
   color: var(--gray-300);
 }
+
+/* Estilos para la tabla de notificaciones */
+.notificacion-checkbox {
+  cursor: pointer;
+}
+
+#contador-seleccionados {
+  font-weight: 500;
+}
+
+.btn-eliminar-notificacion {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.btn-eliminar-notificacion:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive para tabla de notificaciones */
+@media (max-width: 992px) {
+  #tabla-notificaciones th:nth-child(3),
+  #tabla-notificaciones td:nth-child(3),
+  #tabla-notificaciones th:nth-child(6),
+  #tabla-notificaciones td:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #tabla-notificaciones th:nth-child(2),
+  #tabla-notificaciones td:nth-child(2),
+  #tabla-notificaciones th:nth-child(4),
+  #tabla-notificaciones td:nth-child(4) {
+    display: none;
+  }
+  
+  .btn-eliminar-notificacion {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+  }
+}
