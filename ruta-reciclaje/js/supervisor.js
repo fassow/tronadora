@@ -5,10 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnLogin = document.getElementById('btn-login-supervisor');
   const btnLogout = document.getElementById('btn-logout-supervisor');
   const btnBorrarHistorial = document.getElementById('btn-borrar-historial');
+  const btnBorrarNotificaciones = document.getElementById('btn-borrar-notificaciones');
+  const btnActualizarNotificaciones = document.getElementById('btn-actualizar-notificaciones');
+  const selectAllNotificaciones = document.getElementById('select-all-notificaciones');
   
   // Variables de estado
   let mapaSupervisor = null;
   let capaSectores = null;
+  let listenerNotificaciones = null;
+  let notificacionesSeleccionadas = new Set();
 
   // Función para configurar la escucha del historial
   function configurarEscuchaHistorial() {
@@ -89,6 +94,164 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Función para borrar notificaciones seleccionadas
+  async function borrarNotificacionesSeleccionadas() {
+    if (notificacionesSeleccionadas.size === 0) {
+      mostrarNotificacion('Selecciona al menos una notificación para eliminar', 'warning');
+      return;
+    }
+
+    if (!confirm(`¿Estás seguro que deseas eliminar ${notificacionesSeleccionadas.size} notificación(es)?\nEsta acción no se puede deshacer.`)) {
+      return;
+    }
+
+    const loadingNotification = mostrarNotificacion('Eliminando notificaciones...', 'info', 0);
+    
+    try {
+      // Usar batch para borrado masivo
+      const batch = db.batch();
+      
+      notificacionesSeleccionadas.forEach(notificacionId => {
+        const notificacionRef = db.collection('notificaciones').doc(notificacionId);
+        batch.delete(notificacionRef);
+      });
+      
+      await batch.commit();
+      
+      mostrarNotificacion(`Se eliminaron ${notificacionesSeleccionadas.size} notificación(es)`, 'success');
+      notificacionesSeleccionadas.clear();
+      actualizarContadorSeleccionados();
+      
+    } catch (error) {
+      console.error("Error borrando notificaciones:", error);
+      mostrarNotificacion(`Error al borrar notificaciones: ${error.message}`, 'error');
+    } finally {
+      if (loadingNotification) loadingNotification.remove();
+    }
+  }
+
+  // Función para actualizar contador de seleccionados
+  function actualizarContadorSeleccionados() {
+    const contador = document.getElementById('contador-seleccionados');
+    contador.textContent = `${notificacionesSeleccionadas.size} seleccionados`;
+    
+    // Actualizar estado del checkbox "Seleccionar todos"
+    const checkboxes = document.querySelectorAll('.notificacion-checkbox:checked');
+    selectAllNotificaciones.checked = checkboxes.length > 0 && checkboxes.length === document.querySelectorAll('.notificacion-checkbox').length;
+  }
+
+  // Función para seleccionar/deseleccionar todas las notificaciones
+  function toggleSeleccionarTodasNotificaciones() {
+    const checkboxes = document.querySelectorAll('.notificacion-checkbox');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = selectAllNotificaciones.checked;
+      const notificacionId = checkbox.dataset.id;
+      
+      if (selectAllNotificaciones.checked) {
+        notificacionesSeleccionadas.add(notificacionId);
+      } else {
+        notificacionesSeleccionadas.delete(notificacionId);
+      }
+    });
+    
+    actualizarContadorSeleccionados();
+  }
+
+  // Función para configurar escucha de notificaciones
+  function configurarEscuchaNotificaciones() {
+    if (listenerNotificaciones) {
+      listenerNotificaciones(); // Remover listener anterior
+    }
+    
+    return db.collection('notificaciones')
+      .orderBy('timestamp', 'desc')
+      .limit(20)
+      .onSnapshot((snapshot) => {
+        const tbody = document.getElementById('body-notificaciones');
+        tbody.innerHTML = '';
+        
+        if (snapshot.empty) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="text-center py-4 text-muted">
+                <i class="fas fa-bell-slash fa-2x mb-2"></i>
+                <p>No hay notificaciones</p>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const fecha = data.timestamp?.toDate() || new Date();
+          const notificacionId = doc.id;
+          const isSelected = notificacionesSeleccionadas.has(notificacionId);
+          
+          const fila = document.createElement('tr');
+          fila.innerHTML = `
+            <td>
+              <input type="checkbox" class="form-check-input notificacion-checkbox" 
+                     data-id="${notificacionId}" ${isSelected ? 'checked' : ''}>
+            </td>
+            <td>${fecha.toLocaleString()}</td>
+            <td>${data.conductorEmail || 'N/A'}</td>
+            <td><span class="badge bg-warning">${data.tipo || 'N/A'}</span></td>
+            <td>${data.mensaje || 'N/A'}</td>
+            <td>${data.sectorId || 'Todos'}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-danger btn-eliminar-notificacion" 
+                      data-id="${notificacionId}" title="Eliminar notificación">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(fila);
+        });
+
+        // Agregar event listeners a los checkboxes
+        document.querySelectorAll('.notificacion-checkbox').forEach(checkbox => {
+          checkbox.addEventListener('change', (e) => {
+            const notificacionId = e.target.dataset.id;
+            
+            if (e.target.checked) {
+              notificacionesSeleccionadas.add(notificacionId);
+            } else {
+              notificacionesSeleccionadas.delete(notificacionId);
+            }
+            
+            actualizarContadorSeleccionados();
+          });
+        });
+
+        // Agregar event listeners a los botones de eliminar individual
+        document.querySelectorAll('.btn-eliminar-notificacion').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const notificacionId = e.target.closest('.btn-eliminar-notificacion').dataset.id;
+            
+            if (!confirm('¿Estás seguro que deseas eliminar esta notificación?\nEsta acción no se puede deshacer.')) {
+              return;
+            }
+
+            try {
+              await db.collection('notificaciones').doc(notificacionId).delete();
+              mostrarNotificacion('Notificación eliminada correctamente', 'success');
+              
+              // Remover de seleccionados si estaba seleccionada
+              notificacionesSeleccionadas.delete(notificacionId);
+              actualizarContadorSeleccionados();
+              
+            } catch (error) {
+              console.error("Error eliminando notificación:", error);
+              mostrarNotificacion('Error al eliminar la notificación', 'error');
+            }
+          });
+        });
+      }, (error) => {
+        console.error("Error en listener de notificaciones:", error);
+      });
+  }
+
   // Iniciar sesión supervisor
   btnLogin.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -115,9 +278,19 @@ document.addEventListener('DOMContentLoaded', () => {
       
       await iniciarMapaSupervisor();
       configurarEscuchaHistorial();
+      listenerNotificaciones = configurarEscuchaNotificaciones();
       
-      // Configurar botón de borrado
+      // Configurar botones
       btnBorrarHistorial.addEventListener('click', borrarHistorial);
+      btnBorrarNotificaciones.addEventListener('click', borrarNotificacionesSeleccionadas);
+      btnActualizarNotificaciones.addEventListener('click', () => {
+        if (listenerNotificaciones) {
+          listenerNotificaciones();
+          mostrarNotificacion('Notificaciones actualizadas', 'info');
+        }
+      });
+      selectAllNotificaciones.addEventListener('change', toggleSeleccionarTodasNotificaciones);
+
     } else {
       loginForm.classList.remove('d-none');
       supervisorUI.classList.add('d-none');
@@ -126,6 +299,13 @@ document.addEventListener('DOMContentLoaded', () => {
         mapaSupervisor = null;
         capaSectores = null;
       }
+      // Limpiar listeners
+      if (listenerNotificaciones) {
+        listenerNotificaciones();
+        listenerNotificaciones = null;
+      }
+      // Limpiar selecciones
+      notificacionesSeleccionadas.clear();
     }
   });
 
