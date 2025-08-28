@@ -53,6 +53,14 @@
   </div>
 
   <div id="conductor-interface" class="d-none">
+    <!-- Botón flotante para notificaciones (DENTRO del panel del conductor) -->
+    <div class="position-fixed" style="bottom: 20px; right: 20px; z-index: 1030;">
+      <button class="btn btn-warning btn-lg rounded-circle shadow-lg" id="btnAbrirNotificacion" 
+              style="width: 60px; height: 60px;">
+        <i class="fas fa-exclamation-triangle"></i>
+      </button>
+    </div>
+
     <header class="conductor-header">
       <div class="d-flex align-items-center">
         <button class="btn btn-light d-lg-none me-3 menu-toggle">
@@ -198,64 +206,57 @@
         </div>
       </div>
     </main>
-  </div>  
+  </div>
 
+  <!-- Modal para enviar notificaciones (DEBE ESTAR FUERA de conductor-interface para que funcione con Bootstrap) -->
   <div class="modal fade" id="modalNotificacion" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header bg-warning text-white">
-        <h5 class="modal-title">
-          <i class="fas fa-exclamation-circle me-2"></i> Reportar Incidencia
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formNotificacion">
-          <div class="mb-3">
-            <label class="form-label">Tipo de incidencia</label>
-            <select class="form-select" id="tipoIncidencia" required>
-              <option value="">Seleccionar tipo...</option>
-              <option value="retraso">Retraso en la ruta</option>
-              <option value="cancelacion">Cancelación del día</option>
-              <option value="problema_vehiculo">Problema con el vehículo</option>
-              <option value="problema_ruta">Problema en la ruta</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Sector afectado (opcional)</label>
-            <select class="form-select" id="sectorAfectado">
-              <option value="">Todos los sectores</option>
-              <!-- Se llenará dinámicamente -->
-            </select>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Mensaje detallado</label>
-            <textarea class="form-control" id="mensajeIncidencia" rows="4" 
-                     placeholder="Describe la situación, retraso estimado, o cualquier detalle importante..." 
-                     required></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-warning" id="btnEnviarNotificacion">
-          <i class="fas fa-paper-plane me-1"></i> Enviar Reporte
-        </button>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-exclamation-circle me-2"></i> Reportar Incidencia
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formNotificacion">
+            <div class="mb-3">
+              <label class="form-label">Tipo de incidencia</label>
+              <select class="form-select" id="tipoIncidencia" required>
+                <option value="">Seleccionar tipo...</option>
+                <option value="retraso">Retraso en la ruta</option>
+                <option value="cancelacion">Cancelación del día</option>
+                <option value="problema_vehiculo">Problema con el vehículo</option>
+                <option value="problema_ruta">Problema en la ruta</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Sector afectado (opcional)</label>
+              <select class="form-select" id="sectorAfectado">
+                <option value="">Todos los sectores</option>
+                <!-- Se llenará dinámicamente -->
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Mensaje detallado</label>
+              <textarea class="form-control" id="mensajeIncidencia" rows="4" 
+                       placeholder="Describe la situación, retraso estimado, o cualquier detalle importante..." 
+                       required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-warning" id="btnEnviarNotificacion">
+            <i class="fas fa-paper-plane me-1"></i> Enviar Reporte
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Botón flotante para notificaciones -->
-<div class="position-fixed" style="bottom: 20px; right: 20px; z-index: 1030;">
-  <button class="btn btn-warning btn-lg rounded-circle shadow-lg" id="btnAbrirNotificacion" 
-          style="width: 60px; height: 60px;">
-    <i class="fas fa-exclamation-triangle"></i>
-  </button>
-</div>
 
   <script>
     // Toggle para el sidebar en móviles
