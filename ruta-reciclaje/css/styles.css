@@ -1,9 +1,8 @@
 :root {
-  /* Colores Base */
   --white: #ffffff;
   --black: #000000;
   
-  /* Colores Eco */
+  /* Colores */
   --eco-50: #f0fdf4;
   --eco-100: #dcfce7;
   --eco-200: #bbf7d0;
@@ -366,8 +365,6 @@ a:hover {
   }
 }
 
-/* Añade estos estilos al final del archivo styles.css */
-
 /* Ajustes para el mapa */
 .mapa-interactivo {
   height: 100%;
@@ -420,3 +417,54 @@ a:hover {
     max-height: 120px;
   }
 }
+
+/* Estilos para notificaciones */
+.notification-item {
+  border-left: 4px solid #f59e0b;
+  transition: all 0.3s ease;
+}
+
+.notification-item:hover {
+  background-color: #fffbeb;
+  transform: translateX(5px);
+}
+
+.notification-warning {
+  border-left-color: #f59e0b;
+  background-color: #fffbeb;
+}
+
+.notification-danger {
+  border-left-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.notification-info {
+  border-left-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+/* Botón flotante */
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1030;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Badges para tipos de notificación */
+.badge-retraso { background-color: #fef3c7; color: #b45309; }
+.badge-cancelacion { background-color: #fee2e2; color: #b91c1c; }
+.badge-problema_vehiculo { background-color: #dbeafe; color: #1e40af; }
+.badge-problema_ruta { background-color: #d1fae5; color: #065f46; }
+.badge-otro { background-color: #e9d5ff; color: #7e22ce; }
